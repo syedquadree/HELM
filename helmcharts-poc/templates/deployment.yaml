@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Chart.Name } }
+  labels:
+    app: nginx
+    environment: prod
+  annotations:
+    app.kubernetes.io/revision: " {{ .Release.Revision }}"
+    app.kubernetes.io/tool: " {{ .Release.Service }}"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+        - name: shared-date-logs
+          emptyDir: {}
+      containers:
+        - name: container-writing-dates
+          image: "{{ .Values.alpine.image.registry }}/{{ .Values.alpine.image.repository }}:{{ .Values.alpine.image.tag }}"
+          imagePullPolicy: { { .Values.alpine.image.pullPolicy } }
+          command: ["/bin/sh"]
+          args:
+            ["-c", "while true; do date >> /var/log/index.html; sleep 10; done"]
+          volumeMounts:
+            - name: shared-date-logs
+              mountPath: /var/log
+
+        - name: container-serving-dates
+          image: "{{ .Values.nginx.image.registry }}/{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+          imagePullPolicy: { { .Values.nginx.image.pullPolicy } }
+          ports:
+            - containerPort: { { .Values.nginx.port.containerport } }
+          volumeMounts:
+            - name: shared-date-logs
+              mountPath: /usr/share/nginx/html

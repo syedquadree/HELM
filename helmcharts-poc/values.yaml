@@ -1,0 +1,17 @@
+nginx:
+  image:
+    registry: docker.io
+    repository: library/nginx
+    tag: 1.20.0
+    digest: ""
+    pullPolicy: IfNotPresent
+port:
+  containerPort: 80
+
+alpine:
+  image:
+    registry: docker.io
+    repository: library/alpine
+    tag: latest
+    digest: ""
+    pullPolicy: IfNotPresnet

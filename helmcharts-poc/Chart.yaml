@@ -1,0 +1,13 @@
+apiVersion: v2
+name: nginxwebapp
+description: A Helm chart to deploy an Nginx demo application
+type: application
+version: 1.0.0 # Chart version
+appVersion: "1.23.0" # Application version
+
+maintainers:
+  - name: syed
+
+keywords:
+  - webapp
+  - nginx

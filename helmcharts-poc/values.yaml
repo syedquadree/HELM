@@ -1,3 +1,4 @@
+nameoverRide: "nginxwebapp"
 nginx:
   image:
     registry: docker.io

@@ -8,6 +8,8 @@ metadata:
   annotations:
     app.kubernetes.io/revision: " {{ .Release.Revision }}"
     app.kubernetes.io/tool: " {{ .Release.Service }}"
+    app.kubernetes.io/k8sversion: "{{ .Capabilities.KubeVersion }}"
+    app.kubernetes.io/helm: "{{ .Capabilities.HelmVersion }}"
 spec:
   replicas: 3
   selector:
